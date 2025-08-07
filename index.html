@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Awareness Tool</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        :root {
+            --dark-bg-color: #1a1a2e;
+            --dark-card-bg: #27273f;
+            --dark-text-color: #e0e0e0;
+            --dark-text-light: #b0b0b0;
+            --dark-border-color: #3e3e57;
+            --accent-color: #e94560;
+            --light-bg-color: #ffffff;
+            --light-card-bg: #f5f5f5;
+            --light-text-color: #262626;
+            --light-text-light: #777777;
+            --light-border-color: #d1d1d1;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg-color);
+            color: var(--dark-text-color);
+            transition: all 0.3s ease;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        body.light-mode {
+            background-color: var(--light-bg-color);
+            color: var(--light-text-color);
+        }
+
+        body.light-mode .input-card, body.light-mode .features-section .feature-item, body.light-mode .steps-section, body.light-mode .faq-section {
+            background-color: var(--light-card-bg);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode .input-field {
+            border: 1px solid var(--light-border-color);
+            background-color: #ffffff;
+            color: var(--light-text-color);
+        }
+
+        body.light-mode .input-field::placeholder {
+            color: var(--light-text-light);
+        }
+
+        body.light-mode .faq-item {
+            border-bottom: 1px solid var(--light-border-color);
+        }
+
+        body.light-mode .faq-answer {
+            color: var(--light-text-light);
+        }
+        
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0 20px;
+        }
+
+        .header .logo {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .header p {
+            font-size: 0.9rem;
+            color: var(--dark-text-light);
+            margin-top: 5px;
+        }
+        body.light-mode .header p {
+            color: var(--light-text-light);
+        }
+
+        .input-card {
+            background: var(--dark-card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .input-card h2 {
+            font-size: 1rem;
+            color: var(--dark-text-light);
+            font-weight: 400;
+            margin-bottom: 15px;
+        }
+        body.light-mode .input-card h2 {
+            color: var(--light-text-light);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--dark-border-color);
+            background-color: var(--dark-bg-color);
+            color: var(--dark-text-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        .input-field::placeholder {
+            color: var(--dark-text-light);
+            opacity: 0.7;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(90deg, #ff386e 0%, #ff84a8 100%);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 56, 110, 0.3);
+        }
+        .btn-green {
+            background: linear-gradient(90deg, #22c55e 0%, #4ade80 100%);
+        }
+
+        .features-section {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        .feature-item {
+            text-align: center;
+            flex: 1 1 30%;
+            margin: 10px;
+            background-color: var(--dark-card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(255, 255, 255, 0.1);
+        }
+        body.light-mode .feature-item {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        body.light-mode .feature-item:hover {
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        .feature-item .icon {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+        .feature-item h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .feature-item p {
+            font-size: 0.8rem;
+            color: var(--dark-text-light);
+            margin: 0;
+        }
+        body.light-mode .feature-item p {
+            color: var(--light-text-light);
+        }
+        
+        .steps-section {
+            padding: 20px;
+            text-align: center;
+            background-color: var(--dark-card-bg);
+            border-radius: 12px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        .steps-section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .step-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .step-item .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-right: 15px;
+        }
+        .step-item p {
+            text-align: left;
+            font-size: 0.9rem;
+            color: var(--dark-text-light);
+            margin: 0;
+        }
+        body.light-mode .step-item p {
+            color: var(--light-text-light);
+        }
+
+        .faq-section {
+            background-color: var(--dark-card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+        .faq-section h2 {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .faq-item {
+            border-bottom: 1px solid var(--dark-border-color);
+            padding: 15px 0;
+            transition: border-color 0.3s ease;
+        }
+        body.light-mode .faq-item {
+            border-bottom: 1px solid var(--light-border-color);
+        }
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .faq-answer {
+            font-size: 0.9rem;
+            color: var(--dark-text-light);
+            margin-top: 10px;
+            padding-right: 20px;
+            display: none;
+        }
+        body.light-mode .faq-answer {
+            color: var(--light-text-light);
+        }
+        .faq-toggle-icon {
+            transition: transform 0.3s ease;
+        }
+        .faq-item.open .faq-toggle-icon {
+            transform: rotate(45deg);
+        }
+        .faq-item.open .faq-answer {
+            display: block;
+        }
+
+        #resultContainer {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #2e2e2e;
+            border-radius: 8px;
+            display: none;
+        }
+        body.light-mode #resultContainer {
+            background-color: #e0e0e0;
+        }
+
+        #resultLink {
+            display: block;
+            word-wrap: break-word;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #4b8df2;
+        }
+
+        #copyBtn {
+            margin-top: 10px;
+            background-color: #2d963c;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        #copyBtn:hover {
+            background-color: #21732a;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: var(--dark-text-light);
+            transition: color 0.3s ease;
+        }
+        body.light-mode footer {
+            color: var(--light-text-light);
+        }
+        footer .heart {
+            color: #e94560;
+        }
+        
+        .toggle-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 20px;
+            background-color: var(--dark-border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            z-index: 100;
+            transition: background-color 0.3s;
+        }
+        .toggle-switch .slider {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #fff;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s;
+        }
+        body.light-mode .toggle-switch {
+            background-color: var(--light-border-color);
+        }
+        body.light-mode .toggle-switch .slider {
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+<body>
+
+<div class="toggle-switch" onclick="toggleTheme()">
+    <div class="slider"></div>
+</div>
+
+<div class="container">
+    <div class="header">
+        <i class="fab fa-instagram logo"></i>
+        <h1>Phishing Awareness Tool</h1>
+        <p>अपने दोस्तों को यह दिखाकर जागरूक करें कि उनका डेटा कितनी आसानी से चोरी हो सकता है।</p>
+    </div>
+
+    <div class="input-card">
+        <div class="input-group">
+            <input type="text" id="botToken" class="input-field" placeholder="Paste your Telegram Bot Token here" required>
+        </div>
+        <div class="input-group">
+            <input type="text" id="chatId" class="input-field" placeholder="Paste your Telegram Chat ID here" required>
+        </div>
+        <button class="btn btn-green" onclick="generateLink()">Generate Phishing Link</button>
+        
+        <div id="resultContainer">
+            <p>Your phishing link is ready. Share it to educate your friends!</p>
+            <a href="#" id="resultLink" target="_blank"></a>
+            <button id="copyBtn" onclick="copyLink()">Copy Link</button>
+        </div>
+    </div>
+    
+    <div class="features-section">
+        <div class="feature-item">
+            <i class="fas fa-bolt icon"></i>
+            <h3>Lightning Fast</h3>
+            <p>Our servers deliver your link instantly to showcase phishing speed.</p>
+        </div>
+        <div class="feature-item">
+            <i class="fas fa-star icon"></i>
+            <h3>Highest Quality</h3>
+            <p>This demo has a high-quality user interface to mimic real websites.</p>
+        </div>
+        <div class="feature-item">
+            <i class="fas fa-shield-alt icon"></i>
+            <h3>100% Safe</h3>
+            <p>This tool is for educational purposes only. It will not harm your data.</p>
+        </div>
+    </div>
+
+    <div class="steps-section">
+        <h2>How to Setup</h2>
+        <div class="step-item">
+            <div class="number">1</div>
+            <p><b>Copy Post URL</b><br>On Telegram, go to @BotFather and send <code>/newbot</code> command to get your Bot Token.</p>
+        </div>
+        <div class="step-item">
+            <div class="number">2</div>
+            <p><b>Paste URL</b><br>On Telegram, send a message to your new bot. Then, message @userinfobot to get your Chat ID.</p>
+        </div>
+        <div class="step-item">
+            <div class="number">3</div>
+            <p><b>Download</b><br>Paste your Bot Token and Chat ID in the fields above and click the button to generate your unique link.</p>
+        </div>
+    </div>
+
+    <div class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item" onclick="toggleFAQ(this)">
+            <div class="faq-question">
+                Is this Instagram downloader free to use?
+                <i class="fas fa-plus faq-toggle-icon"></i>
+            </div>
+            <div class="faq-answer">
+                <p>This is not a real downloader. It is a free tool created to educate people on how phishing scams work by generating a demonstration link.</p>
+            </div>
+        </div>
+        <div class="faq-item" onclick="toggleFAQ(this)">
+            <div class="faq-question">
+                What types of content can I download?
+                <i class="fas fa-plus faq-toggle-icon"></i>
+            </div>
+            <div class="faq-answer">
+                <p>This tool does not actually download any content. It's designed to show how a malicious website might try to trick you into entering your login details.</p>
+            </div>
+        </div>
+        <div class="faq-item" onclick="toggleFAQ(this)">
+            <div class="faq-question">
+                Can I download private Instagram content?
+                <i class="fas fa-plus faq-toggle-icon"></i>
+            </div>
+            <div class="faq-answer">
+                <p>No, this tool does not interact with Instagram in any way. It's a simulated environment for educational purposes. We do not store any information you provide.</p>
+            </div>
+        </div>
+        <div class="faq-item" onclick="toggleFAQ(this)">
+            <div class="faq-question">
+                Is there a limit on video length?
+                <i class="fas fa-plus faq-toggle-icon"></i>
+            </div>
+            <div class="faq-answer">
+                <p>Since this is not a real downloader, there are no limits on video length. The purpose is to demonstrate a concept, not to download files.</p>
+            </div>
+        </div>
+        <div class="faq-item" onclick="toggleFAQ(this)">
+            <div class="faq-question">
+                How do I download Instagram content on mobile?
+                <i class="fas fa-plus faq-toggle-icon"></i>
+            </div>
+            <div class="faq-answer">
+                <p>This tool is not a real downloader, so it doesn't have that functionality. The goal is to show you a phishing website's behavior, not to provide a download service.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div style="margin-top: 10px;">
+        <p>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-facebook"></i>
+            <i class="fab fa-twitter"></i>
+        </p>
+        © 2025 URL Shortener | Developed with <span style="color: red;">❤</span> by Divyansh - Deewana
+    </div>
+</footer>
+
+<script>
+    function toggleFAQ(element) {
+        element.classList.toggle('open');
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle('light-mode');
+    }
+
+    async function generateLink() {
+        const botToken = document.getElementById('botToken').value;
+        const chatId = document.getElementById('chatId').value;
+        const btn = document.querySelector('.btn-green');
+        const resultContainer = document.getElementById('resultContainer');
+        const resultLinkElement = document.getElementById('resultLink');
+
+        if (!botToken || !chatId) {
+            alert('Please enter both the Bot Token and Chat ID.');
+            return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'Generating...';
+
+        const originalUrl = `${window.location.href.split('?')[0].replace('index.html', '')}phishing_page.html?token=${botToken}&chatid=${chatId}`;
+        const shortApi = `https://tinyurl.com/api-create.php?url=${encodeURIComponent(originalUrl)}`;
+
+        try {
+            const response = await fetch(shortApi);
+            const shortUrl = await response.text();
+            
+            resultLinkElement.href = shortUrl;
+            resultLinkElement.innerText = shortUrl;
+            resultContainer.style.display = 'block';
+
+        } catch (error) {
+            console.error('Failed to shorten URL:', error);
+            alert('Failed to shorten URL. Please try again.');
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Generate Phishing Link';
+        }
+    }
+
+    function copyLink() {
+        const resultLinkElement = document.getElementById('resultLink');
+        const range = document.createRange();
+        range.selectNode(resultLinkElement);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+        alert('Link copied to clipboard!');
+    }
+</script>
+
+</body>
+</html>
