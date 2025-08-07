@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .login-card {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 350px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .login-card .logo {
+            font-size: 2.5rem;
+            background: -webkit-linear-gradient(#f9ce34, #ee2a7b, #6228d7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        
+        .login-card h2 {
+            font-size: 1.5rem;
+            color: #1f2937;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+        
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background-color: #0095f6;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-bottom: 10px;
+        }
+        
+        .btn-login:hover {
+            background-color: #007bb5;
+        }
+
+        .text-separator {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #9ca3af;
+            margin: 20px 0;
+        }
+        .text-separator::before, .text-separator::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #d1d5db;
+        }
+        .text-separator:not(:empty)::before {
+            margin-right: .25em;
+        }
+        .text-separator:not(:empty)::after {
+            margin-left: .25em;
+        }
+
+        .forgot-password a {
+            color: #0095f6;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <i class="fab fa-instagram logo"></i>
+    <h2>Log in to Instagram</h2>
+    <form id="fakeLoginForm">
+        <div class="input-group">
+            <input type="text" id="username" class="input-field" placeholder="Username, email, or phone" required>
+        </div>
+        <div class="input-group">
+            <input type="password" id="password" class="input-field" placeholder="Password" required>
+        </div>
+        <button type="submit" class="btn-login">Log In</button>
+    </form>
+    <div class="text-separator">OR</div>
+    <div class="forgot-password">
+        <a href="#">Forgot password?</a>
+    </div>
+</div>
+
+<script>
+    document.getElementById('fakeLoginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('This is a demonstration page. Your entered details have NOT been sent anywhere.');
+        // You can redirect to a different page or show a success message here.
+        // window.location.href = 'success_page.html';
+    });
+</script>
+
+</body>
+</html>
